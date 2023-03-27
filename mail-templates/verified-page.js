@@ -114,7 +114,7 @@ const verifiedPage = () => {
           <tr>
             <td align="left" bgcolor="#191919" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
               <p style="margin: 0; color: #fff">If that doesn't work, click on the link below:</p>
-              <p style="margin: 0;"><a href="https://localhost:3000/signin" target="_blank">D3crypt</a></p>
+              <p style="margin: 0;"><a href="https://d3crypt-2023.netlify.app/signin" target="_blank">D3crypt</a></p>
             </td>
           </tr>
         </table>
@@ -132,7 +132,7 @@ const verifiedPage = () => {
   function countdown() {
       var i = document.getElementById('counter');
       if (parseInt(i.innerHTML)<=0) {
-          location.href = 'https://localhost:3000/signin';
+          location.href = 'https://d3crypt-2023.netlify.app/signin';
       }
   if (parseInt(i.innerHTML)!=0) {
       i.innerHTML = parseInt(i.innerHTML)-1;

@@ -139,8 +139,8 @@ router.post("/signup", async (req, res) => {
 
     var transporter = nodemailer.createTransport({
       host: "smtp-mail.outlook.com", // hostname
-      secureConnection: false, // TLS requires secureConnection to be false
-      port: 587, // port for secure SMTP
+      secureConnection: true, // TLS requires secureConnection to be false
+      port: 465, // port for secure SMTP
       auth: {
         user: "arshiaputhran@outlook.com",
         pass: "aditya12"
@@ -150,7 +150,7 @@ router.post("/signup", async (req, res) => {
       }
     });
 
-    const verifyLink = `http://${req.headers.host}/verify-email?uid=${user._id}`
+    const verifyLink = `https://d3crypt-2023.netlify.app/verify-email?uid=${user._id}`
     // const verifyLink = `https://d3crypt.ieeemanipal.com/verification/${token}`
     const message = verifyTemplate(username, verifyLink, email);
 
@@ -259,15 +259,15 @@ router.post("/forgot", async (req, res) => {
     };
     const token = jwt.sign(payload, secret, { expiresIn: "15m" });
 
-    const link = `http://localhost:3000/reset/${token}`;
+    const link = `https://d3crypt-2023.netlify.app/reset/${token}`;
     // const link = `http://${req.headers.host}/reset-password?uid=${user._id}`;
 
     console.log(link);
 
     var transporter = nodemailer.createTransport({
       host: "smtp-mail.outlook.com", // hostname
-      secureConnection: false, // TLS requires secureConnection to be false
-      port: 587, // port for secure SMTP
+      secureConnection: true, // TLS requires secureConnection to be false
+      port: 465, // port for secure SMTP
       auth: {
         user: "arshiaputhran@outlook.com",
         pass: "aditya12"

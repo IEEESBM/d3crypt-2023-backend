@@ -64,15 +64,15 @@ mongoose.connect("mongodb+srv://shreyaslshah:shreyasshah@cluster0.bakje.mongodb.
 
   .then(console.log("Connected to DB"))
   .catch((err) => console.log(err));
-  
-app.get("/test",checkJWT,checkIsVerified,async(req,res)=>{
+
+app.get("/test", checkJWT, checkIsVerified, async (req, res) => {
   console.log(req.userId);
-  return res.json({'user':req.userId});
+  return res.json({ 'user': req.userId });
 })
 
 app.use(authRoutes);
 
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
