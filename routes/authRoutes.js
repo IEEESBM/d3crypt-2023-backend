@@ -139,7 +139,7 @@ router.post("/signup", async (req, res) => {
 
     var transporter = nodemailer.createTransport({
       host: "smtp-mail.outlook.com", // hostname
-      port: 587,
+      port: 465,
       secure: false,
       auth: {
         user: "arshiaputhran@outlook.com",
@@ -263,7 +263,7 @@ router.post("/forgot", async (req, res) => {
 
     var transporter = nodemailer.createTransport({
       host: "smtp-mail.outlook.com", // hostname
-      port: 587,
+      port: 465,
       secure: false,
       auth: {
         user: "arshiaputhran@outlook.com",
