@@ -142,8 +142,8 @@ router.post("/signup", async (req, res) => {
     //   port: 465,
     //   secure: false,
     //   auth: {
-    //     user: "arshiaputhran@outlook.com",
-    //     pass: "aditya12"
+    //     user: "",
+    //     pass: ""
     //   }
     // });
 
@@ -264,8 +264,8 @@ router.post("/forgot", async (req, res) => {
       port: 465,
       secure: false,
       auth: {
-        user: "arshiaputhran@outlook.com",
-        pass: "aditya12"
+        user: "user",
+        pass: "pass"
       },
     });
 
