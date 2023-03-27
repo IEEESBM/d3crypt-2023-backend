@@ -131,42 +131,40 @@ router.post("/signup", async (req, res) => {
       ID,
       mem,
       memNo,
-      isVerified: false,
+      isVerified: true,
     });
     const token = createToken(user._id);
-    sessionstorage.setItem("jwt", token);
+    // sessionstorage.setItem("jwt", token);
 
 
-    var transporter = nodemailer.createTransport({
-      host: "smtp-mail.outlook.com", // hostname
-      port: 465,
-      secure: false,
-      auth: {
-        user: "arshiaputhran@outlook.com",
-        pass: "aditya12"
-      }
-    });
+    // var transporter = nodemailer.createTransport({
+    //   host: "smtp-mail.outlook.com", // hostname
+    //   port: 465,
+    //   secure: false,
+    //   auth: {
+    //     user: "arshiaputhran@outlook.com",
+    //     pass: "aditya12"
+    //   }
+    // });
 
-    const verifyLink = `https://d3crypt-2023.netlify.app/verify-email?uid=${user._id}`
-    // const verifyLink = `https://d3crypt.ieeemanipal.com/verification/${token}`
-    const message = verifyTemplate(username, verifyLink, email);
+    // const verifyLink = `https://d3crypt-2023.netlify.app/verify-email?uid=${user._id}`
+    // const message = verifyTemplate(username, verifyLink, email);
 
-    const options = {
-      from: "arshiaputhran@outlook.com",
-      to: email,
-      subject: "Email Verification",
-      text: `go to this link: `,
-      // html: `<a href='http://${req.headers.host}/verify-email?uid=${user._id}'>click to verify</a>`,
-      html: message,
-    };
+    // const options = {
+    //   from: "arshiaputhran@outlook.com",
+    //   to: email,
+    //   subject: "Email Verification",
+    //   text: `go to this link: `,
+    //   html: message,
+    // };
 
-    transporter.sendMail(options, function (err, info) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log("verification email sent");
-    });
+    // transporter.sendMail(options, function (err, info) {
+    //   if (err) {
+    //     console.log(err);
+    //     return;
+    //   }
+    //   console.log("verification email sent");
+    // });
 
     // res.status(201).json(user);
     res.status(201).json(token);
