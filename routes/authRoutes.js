@@ -139,14 +139,11 @@ router.post("/signup", async (req, res) => {
 
     var transporter = nodemailer.createTransport({
       host: "smtp-mail.outlook.com", // hostname
-      secureConnection: true, // TLS requires secureConnection to be false
-      port: 465, // port for secure SMTP
+      port: 587,
+      secure: false,
       auth: {
         user: "arshiaputhran@outlook.com",
         pass: "aditya12"
-      },
-      tls: {
-        ciphers: 'SSLv3'
       }
     });
 
@@ -266,15 +263,12 @@ router.post("/forgot", async (req, res) => {
 
     var transporter = nodemailer.createTransport({
       host: "smtp-mail.outlook.com", // hostname
-      secureConnection: true, // TLS requires secureConnection to be false
-      port: 465, // port for secure SMTP
+      port: 587,
+      secure: false,
       auth: {
         user: "arshiaputhran@outlook.com",
         pass: "aditya12"
       },
-      tls: {
-        ciphers: 'SSLv3'
-      }
     });
 
     const message = passwordTemplate(user.username, link, email);
