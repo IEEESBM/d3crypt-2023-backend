@@ -22,7 +22,7 @@ router.get("/", checkJWT, checkIsVerified, async (req, res) => {
     var u = await User.findOne({ _id: userID }).select("-_id -password -noofattempts");
     let current = u.currentQuestion;
 
-    if (current >= 5) {
+    if (current >= 25) {
        return res.send("Congratulations!, you're done with all the questions");
     }
 

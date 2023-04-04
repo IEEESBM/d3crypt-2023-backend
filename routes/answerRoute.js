@@ -30,7 +30,7 @@ router.post('/submit', async (req, res) => {
   let qIndex = user.questions[currQues];
 
   //edge-case
-  if (currQues == 30) {
+  if (currQues == 25) {
     res.send("CONGRATULATIONS! YOU'RE DONE!!!");
     //show leaderboard
   } else {
