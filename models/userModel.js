@@ -130,8 +130,8 @@ userSchema.statics.login = async function (email, password) {
 async function generate(randomqs, set, totalQuestions) {
   //index the easy med hard questions start from for the user
   const easyidx = 0;  
-  const medidx = 16;  
-  const hardidx = 27; 
+  const medidx = 13;  
+  const hardidx = 21; 
 
   //number of easy/med/hard questions to be solved by the user.
   const easy_questions = 13;
