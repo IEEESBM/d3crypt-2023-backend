@@ -13,7 +13,6 @@ const router = Router();
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.post('/submit', async (req, res) => {
-  console.log("entered submit route");
   //get data from user
   let userInput = req.body.answer;
   let token = req.body.token;
@@ -29,7 +28,6 @@ router.post('/submit', async (req, res) => {
   let noofattempts = user.noofattempts;
   let currQues = user.currentQuestion;
   let qIndex = user.questions[currQues];
-  console.log(currScore, allResponses, noofattempts, qIndex)
 
   //edge-case
   if (currQues == 30) {
@@ -39,7 +37,6 @@ router.post('/submit', async (req, res) => {
     //check answer and if correct calculate score
     if (await handleAnswer.checkAnswer(userInput, qIndex).catch(err => console.log(err))) {
 
-      console.log(req.body.answer + ' is the correct answer');
       await handleScore.updateResponses(true, id);
       await handleScore.scoreHandling(currScore, true, noofattempts, allResponses, id);
       await user.updateOne({ noofattempts: 1 });
@@ -49,12 +46,10 @@ router.post('/submit', async (req, res) => {
       await user.updateOne({ currentQuestion: next });
       await user.updateOne({ hint1_used: false });
       await user.updateOne({ hint2_used: false });
-      console.log("User advanced to the next question");
 
       res.status(200).json({ isCorrect: true });
 
     } else {
-      console.log("WRONG ANSWER")
       await handleScore.updateResponses(false, id);
       noofattempts += 1;
       await user.updateOne({ noofattempts: noofattempts })
@@ -68,9 +63,7 @@ router.post('/submit', async (req, res) => {
 router.put('/hint',checkIsVerified, checkJWT, async (req, res) => {
   try {
     let u = await User.findById(req.userId);
-    console.log('user: ', u);
     let current = u.currentQuestion;
-    console.log(u.currentQuestion);
     let cq = await Question.findOne({ index: u.questions[current] });
 
     //change hint cost here
@@ -100,8 +93,6 @@ router.put('/hint',checkIsVerified, checkJWT, async (req, res) => {
       });
       }
     }
-    console.log(u.hint1_used, u.hint2_used);
-    console.log(u);
 
   } catch (err) {
     res.status(404).json({

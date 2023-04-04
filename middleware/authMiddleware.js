@@ -8,7 +8,6 @@ const checkJWT = async (req, res, next) => {
   if (token) {
     jwt.verify(token, 'jwt secret', (err) => {
       if (err) {
-        console.log(err.message, token);
         res.json({ error: 'jwt_error' });
       } else {
         next();
@@ -29,7 +28,6 @@ const checkIsVerified = async (req, res, next) => {
     var userID = JSON.parse(payload.toString()).id;
     req.userId = userID;
     var user = await User.findOne({ _id: userID });
-    console.log(user);
     if (user.isVerified === true) {
       next();
     }

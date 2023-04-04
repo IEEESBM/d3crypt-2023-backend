@@ -91,17 +91,15 @@ userSchema.pre("save", async function (next) {
   this.noofattempts = 1;
 
   //Random Set alloc
-  console.log("saving a new set to db");
 
-  let totalQuestions = 20;
+  let totalQuestions = 34;
   let set = new Array(totalQuestions).fill(0);
 
-  let totalQuestions_user = 5;
+  let totalQuestions_user = 25;
   let randomqs = new Array(totalQuestions_user).fill(-1);
 
   await generate(randomqs, set, totalQuestions);
 
-  console.log(randomqs);
   this.questions = randomqs;
   this.currentQuestion = 0;
   this.points = 0;
@@ -130,14 +128,15 @@ userSchema.statics.login = async function (email, password) {
 }
 
 async function generate(randomqs, set, totalQuestions) {
-  const easyidx = 0;
-  const medidx = 2;
-  const hardidx = 4;
+  //index the easy med hard questions start from for the user
+  const easyidx = 0;  
+  const medidx = 16;  
+  const hardidx = 27; 
 
-  //change number of easy/med/hard questions to be solved by the user.
-  const easy_questions = 2;
-  const med_questions = 2;
-  const hard_questions = 1;
+  //number of easy/med/hard questions to be solved by the user.
+  const easy_questions = 13;
+  const med_questions = 8;
+  const hard_questions = 4;
 
   await generate_easy(easy_questions, 0, easyidx, randomqs, set, totalQuestions);
   await generate_med(med_questions, 0, medidx, randomqs, set, totalQuestions);
@@ -146,14 +145,15 @@ async function generate(randomqs, set, totalQuestions) {
 
 async function generate_easy(easy, curr, idx1, randomqs, set, totalQuestions) {
   if (easy == curr) return;
-  randomIndex1 = Math.floor(Math.random() * (8 - 1 + 1) + 1);
+
+  // random number between the indexes of easy questions in complete set of q
+  randomIndex1 = Math.floor(Math.random() * 16);
 
   try {
     let doc = await Question.findOne({ index: randomIndex1 });
 
     if (doc != null && set[randomIndex1] != 1 && doc.difficulty == 1) {
       set[randomIndex1] = 1;
-      // console.log('easy idx:',idx1);
       randomqs[idx1++] = randomIndex1;
       curr++;
     }
@@ -161,22 +161,19 @@ async function generate_easy(easy, curr, idx1, randomqs, set, totalQuestions) {
     await generate_easy(easy, curr, idx1, randomqs, set, totalQuestions);
   }
   catch (error) {
-    console.log(error);
   }
 
-  // console.log(randomqs);
 }
 
 async function generate_med(med, curr, idx2, randomqs, set, totalQuestions) {
   if (med == curr) return;
   // randomIndex = Math.floor(Math.random() * (totalQuestions + 1));
-  randomIndex2 = Math.floor(Math.random() * (16 - 9 + 1) + 9)
+  randomIndex2 = Math.floor(Math.random() * (26 - 16 + 1)) + 16;
   try {
     let doc = await Question.findOne({ index: randomIndex2 });
 
     if (doc != null && set[randomIndex2] != 1 && doc.difficulty == 2) {
       set[randomIndex2] = 1;
-      // console.log('med idx:',idx2);
       randomqs[idx2++] = randomIndex2;
       curr++;
     }
@@ -184,15 +181,13 @@ async function generate_med(med, curr, idx2, randomqs, set, totalQuestions) {
     await generate_med(med, curr, idx2, randomqs, set, totalQuestions);
   }
   catch (error) {
-    console.log(error);
   }
 
-  // console.log(randomqs);
 }
 
 async function generate_hard(hard, curr, idx3, randomqs, set, totalQuestions) {
   if (hard == curr) return;
-  randomIndex3 = Math.floor(Math.random() * (20 - 17 + 1) + 17)
+  randomIndex3 = Math.floor(Math.random() * 7) + 27;
   try {
     let doc = await Question.findOne({ index: randomIndex3 });
 
@@ -205,9 +200,7 @@ async function generate_hard(hard, curr, idx3, randomqs, set, totalQuestions) {
     await generate_hard(hard, curr, idx3, randomqs, set, totalQuestions);
   }
   catch (error) {
-    console.log(error);
   }
-  // console.log(randomqs);
 }
 
 const User = mongoose.model("users", userSchema);

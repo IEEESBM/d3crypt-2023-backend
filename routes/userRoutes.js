@@ -16,14 +16,7 @@ var idy;
 
 router.get('/u', async (req, res) => {
 
-    try {
-        
-        
-       
-       
-       console.log("idy:");
-    console.log(idy);
-        
+    try {        
     const doc = await User.findByIdAndUpdate(idy, {
         username: req.query.username,
             
@@ -33,10 +26,8 @@ router.get('/u', async (req, res) => {
        
       
     });
-        console.log(doc);
         res.send("Updated");
     } catch (err) {
-        console.log(err);
         res.send(err);
     }
 })
@@ -57,7 +48,6 @@ router.get('/:idy', async (req, res) => {
        
         final=userID;
         idy=final;
-        console.log(final);
         const user = await User.findById(final);
         
         res.json(user);
@@ -103,7 +93,6 @@ router.post('/', async (req, res) => {
         const a1 = await user.save()
         res.send(a1)
     } catch (err) {
-        console.log("Error " + err)
     }
 })
 

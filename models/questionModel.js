@@ -37,17 +37,14 @@ const questionSchema = new mongoose.Schema({
 function validateDifficulty(n) {return (n <= 3 && n >= 1)}
 
 questionSchema.pre('save', async function (next) {
-  console.log("saving a new question to db");
 
   let diff = await this.difficulty;
   this.points = await this.difficulty*100;
-  console.log(this);
   next();
 });
 
 
 questionSchema.post('save', () => {
-  console.log("question saved");
 });
 
 

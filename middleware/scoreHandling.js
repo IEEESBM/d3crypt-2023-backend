@@ -58,8 +58,6 @@ async function scoreHandling(currentScore, isCorrect, attemptNumber, responses, 
 
   //update user db
 
-  console.log('score is ' + currPoints);
-  console.log('bonus is ' + currBonus);
 
 
   await user.updateOne({ points: currPoints + currBonus })

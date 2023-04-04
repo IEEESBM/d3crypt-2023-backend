@@ -41,11 +41,7 @@ function deleteImage(fileKey) {
     Key: fileKey
   },
     function (err, data) {
-      if (err)
-        console.log(err);
-      else
-        console.log('successfully deleted file');
-      console.log(data);
+
     })
 }
 

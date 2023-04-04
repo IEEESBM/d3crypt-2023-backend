@@ -19,7 +19,6 @@ router.get("/", checkJWT, checkIsVerified, async (req, res) => {
     // var base64Payload = token.split(".")[1];
     // var payload = Buffer.from(base64Payload, "base64");
     var userID = req.userId;
-    console.log(userID);
     var u = await User.findOne({ _id: userID }).select("-_id -password -noofattempts");
     let current = u.currentQuestion;
 
@@ -27,12 +26,10 @@ router.get("/", checkJWT, checkIsVerified, async (req, res) => {
        return res.send("Congratulations!, you're done with all the questions");
     }
 
-    console.log(u.currentQuestion);
     let cq = await Question.findOne({ index: u.questions[current] }).select("-answer -hint_1 -hint_2");
     // console.log(cq);
     res.json({ question: cq, user: u });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       msg: "Question Not Found!",
       body: err,

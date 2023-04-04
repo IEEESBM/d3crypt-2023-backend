@@ -16,7 +16,6 @@ const router = Router();
 /* *********************************************************** */
 
 const handleErrors = (error) => {
-  console.log(error);
 
   let errorMessage = {
     username: "",
@@ -27,7 +26,6 @@ const handleErrors = (error) => {
     mem: "",
     verify: "",
   };
-  console.log(error.message);
   // wrong email/password during login error
   if (error.message === "incorrect email") {
     errorMessage.email = "Invalid Email Id";
@@ -169,9 +167,7 @@ router.post("/signup", async (req, res) => {
     // res.status(201).json(user);
     res.status(201).json(token);
   } catch (error) {
-    console.log(error);
     let errorMessage = handleErrors(error);
-    console.log(errorMessage);
     // res.status(400).json({ errorMessage, 'err': error.toString() })
     res.status(400).json({ errorMessage });
   }
@@ -189,15 +185,13 @@ router.get("/verify-email", async (req, res) => {
     var userID = req.query.uid;
     const user = await User.findOne({ _id: userID });
     if (!user) {
-      console.log("could not find user");
     } else {
       await user
         .updateOne({ isVerified: true })
-        .then(console.log("user email is verified"));
+        .then();
     }
     res.send(verifiedPage());
   } catch (error) {
-    console.log(error);
     res.send("verification failed");
   }
 });
@@ -220,9 +214,7 @@ router.post("/login", async (req, res) => {
 
     res.status(200).json(token);
   } catch (error) {
-    console.log(error);
     let errorMessage = handleErrors(error);
-    console.log("err:", errorMessage);
 
     res.status(400).json(errorMessage);
   }
@@ -232,7 +224,6 @@ router.post("/login", async (req, res) => {
 
 router.post("/forgot", async (req, res) => {
   const { email } = req.body;
-  console.log(email);
   const user = await User.findOne({ email }).lean();
   if (!user) {
     return res.json({
@@ -257,7 +248,6 @@ router.post("/forgot", async (req, res) => {
     const link = `https://d3crypt-2023.netlify.app/reset/${token}`;
     // const link = `http://${req.headers.host}/reset-password?uid=${user._id}`;
 
-    console.log(link);
 
     var transporter = nodemailer.createTransport({
       host: "smtp-mail.outlook.com", // hostname
@@ -281,7 +271,6 @@ router.post("/forgot", async (req, res) => {
 
     transporter.sendMail(options, function (err, info) {
       if (err) {
-        console.log(err);
         return;
       }
       res.json({ status: "success", error: "", data: "" });
@@ -291,7 +280,6 @@ router.post("/forgot", async (req, res) => {
 
 router.patch("/reset", async (req, res) => {
   const { token, newPass } = req.body;
-  console.log(req.body);
   // const user = await User.findOne({ id }).lean();
   // if (!user) {
   //   return res.json({
@@ -308,11 +296,9 @@ router.patch("/reset", async (req, res) => {
     });
   } else {
     try {
-      console.log(newPass);
       var base64Payload = token.split('.')[1];
       var payload = Buffer.from(base64Payload, 'base64');
       var id = JSON.parse(payload.toString()).id;
-      console.log(id);
       const hash_password = await bcrypt.hash(newPass, 10);
       const updatedUser = await User.updateOne(
         { _id: id },
@@ -337,17 +323,14 @@ router.post("/get-user", checkIsVerified, checkJWT, async (req, res) => {
     const user = await User.findOne({ _id: req.userId });
     return res.status(200).json(user);
   } catch (error) {
-    console.log(error);
   }
 });
 
 router.delete("/:id", async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
-    console.log(user);
     return res.json(user);
   } catch (err) {
-    console.log(err);
   }
 });
 
@@ -356,7 +339,6 @@ router.get("/user", async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     res.json(user);
   } catch (err) {
-    console.log(err);
   }
 });
 

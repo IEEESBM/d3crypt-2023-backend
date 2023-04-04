@@ -1,4 +1,4 @@
-
+require('dotenv').config()
 const express = require('express');
 const cors = require("cors");
 const mongoose = require('mongoose');
@@ -53,20 +53,14 @@ app.use(cookieParser());
 
 // //testing db
 
-mongoose.connect("mongodb+srv://shreyaslshah:shreyasshah@cluster0.bakje.mongodb.net/decrypt?retryWrites=true&w=majority", {
+mongoose.connect(process.env.MONGO_LINK , {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-
   .then(app.listen(port))
-
-
-
-  .then(console.log("Connected to DB"))
   .catch((err) => console.log(err));
 
 app.get("/test", checkJWT, checkIsVerified, async (req, res) => {
-  console.log(req.userId);
   return res.json({ 'user': req.userId });
 })
 
